@@ -6,7 +6,7 @@ result = [
     for a in input
     for b in input
     for c in input
-    if a > b and b > c and sum(a, b, c) == 2020
+    if a > b and b > c and a + b + c == 2020
 ]
 
 print(result)
