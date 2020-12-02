@@ -27,8 +27,8 @@ def part_2(data):
         spec_pos_rule, letter = spec.split(" ")
 
         pos1, pos2 = map(int, spec_pos_rule.split("-"))
-        char1 = password[pos1 - 1]
-        char2 = password[pos2 - 1]
+        char1, char2 = password[pos1 - 1], password[pos2 - 1]
+
         if char1 != char2 and (char1 == letter or char2 == letter):
             valid += 1
     return valid
