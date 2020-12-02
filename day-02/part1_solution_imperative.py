@@ -10,7 +10,7 @@ def part_1(data):
     valid = 0
     for line in data:
         spec, password = line.split(": ")
-        spec_len_rule, letter = spec.split(" ")
+        spec_len_rule, letter = spec.split()
 
         min, max = map(int, spec_len_rule.split("-"))
 
@@ -24,7 +24,7 @@ def part_2(data):
     valid = 0
     for line in data:
         spec, password = line.split(": ")
-        spec_pos_rule, letter = spec.split(" ")
+        spec_pos_rule, letter = spec.split()
 
         pos1, pos2 = map(int, spec_pos_rule.split("-"))
         char1, char2 = password[pos1 - 1], password[pos2 - 1]
