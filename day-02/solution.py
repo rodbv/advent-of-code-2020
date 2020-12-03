@@ -20,14 +20,13 @@ def part_1():
 def part_2():
     valid = 0
     for line in input:
-        spec, password = line.split(": ")
-        spec_pos_rule, letter = spec.split()
-
-        pos1, pos2 = map(int, spec_pos_rule.split("-"))
-        char1, char2 = password[pos1 - 1], password[pos2 - 1]
+        # a typical line looks like this: "1-3 b: cdefg"
+        pos1, pos2, letter, password = re.split("-|: | ", line)
+        char1, char2 = password[int(pos1) - 1], password[int(pos2) - 1]
 
         if char1 != char2 and (char1 == letter or char2 == letter):
             valid += 1
+
     return valid
 
 
