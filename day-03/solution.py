@@ -12,7 +12,8 @@ def traverse(steps_right, steps_down):
     trees_found = 0
     x_position = 0
     for line in input[::steps_down]:
-        tree_or_space = line[x_position % repeat_width]
+        tree_or_space_pos = x_position % repeat_width
+        tree_or_space = line[tree_or_space_pos]
         if tree_or_space == TREE:
             trees_found += 1
         x_position += steps_right
