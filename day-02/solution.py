@@ -1,28 +1,25 @@
 # Problem spec: https://adventofcode.com/2020/day/2
 
-from re import findall
+import re
 
 with open("input.txt", "r") as input_file:
     input = [line.strip() for line in input_file.readlines()]
 
 
-def part_1(data):
+def part_1():
     valid = 0
-    for line in data:
-        spec, password = line.split(": ")
-        spec_len_rule, letter = spec.split()
-
-        min, max = map(int, spec_len_rule.split("-"))
-
-        letter_count = len(findall(letter, password))
-        if letter_count >= min and letter_count <= max:
+    for line in input:
+        # a typical line looks like this: "1-3 b: cdefg"
+        min, max, letter, password = re.split("-|: | ", line)
+        letter_count = len(re.findall(letter, password))
+        if letter_count >= int(min) and letter_count <= int(max):
             valid += 1
     return valid
 
 
-def part_2(data):
+def part_2():
     valid = 0
-    for line in data:
+    for line in input:
         spec, password = line.split(": ")
         spec_pos_rule, letter = spec.split()
 
@@ -34,5 +31,5 @@ def part_2(data):
     return valid
 
 
-print(part_1(input))
-print(part_2(input))
+print(part_1())
+print(part_2())
