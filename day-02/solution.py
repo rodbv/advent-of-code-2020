@@ -12,8 +12,8 @@ def part_1():
         # a typical line looks like this: "1-3 b: cdefg"
         min, max, letter, password = re.split("-|: | ", line)
         letter_count = len(re.findall(letter, password))
-        if letter_count >= int(min) and letter_count <= int(max):
-            valid += 1
+        valid += 1 if int(min) <= letter_count <= int(max) else 0
+
     return valid
 
 
