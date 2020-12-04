@@ -20,7 +20,7 @@ rules = {
     "eyr": lambda year: check_year(year, 2020, 2030),
     "hgt": check_height,
     "hcl": lambda color: re.fullmatch(r"#[a-f0-9]{6}", color) is not None,
-    "ecl": lambda color: color in "amb blu brn gry grn hzl oth".split(),
+    "ecl": lambda color: color in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"],
     "pid": lambda pid: len(pid) == 9 and pid.isnumeric(),
     "cid": lambda cid: True,
 }
