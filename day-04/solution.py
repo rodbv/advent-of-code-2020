@@ -1,21 +1,9 @@
+import re
+
 # Problem spec: https://adventofcode.com/2020/day/4
 
 with open("input.txt", "r") as input_file:
     passports = input_file.read().split("\n\n")
-
-
-def part_one():
-    required_fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
-    return len(
-        [
-            passport
-            for passport in passports
-            if all([f"{field}:" in passport for field in required_fields])
-        ]
-    )
-
-
-import re
 
 
 def check_height(height):
@@ -26,7 +14,28 @@ def check_height(height):
     return False
 
 
-def part_two():
+rules = {
+    "byr": lambda year: check_year(year, 1920, 2002),
+    "iyr": lambda year: check_year(year, 2010, 2020),
+    "eyr": lambda year: check_year(year, 2020, 2030),
+    "hgt": check_height,
+    "hcl": lambda color: re.fullmatch(r"#[a-f0-9]{6}", color) is not None,
+    "ecl": lambda color: color in "amb blu brn gry grn hzl oth".split(),
+    "pid": lambda pid: len(pid) == 9 and pid.isnumeric(),
+    "cid": lambda cid: True,
+}
+
+
+def has_required_fields(passport):
+    required_fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
+    return all([f"{field}:" in passport for field in required_fields])
+
+
+def check_year(year, min, max):
+    return len(year) == 4 and min <= int(year) <= max
+
+
+def passport_is_valid(passport):
     """
     byr (Birth Year) - four digits; at least 1920 and at most 2002.
     iyr (Issue Year) - four digits; at least 2010 and at most 2020.
@@ -40,25 +49,22 @@ def part_two():
     cid (Country ID) - ignored, missing or not.
     """
 
-    check_year = lambda year, min, max: len(year) == 4 and min <= int(year) <= max
+    if not has_required_fields(passport):
+        return False
 
-    rules = {
-        "byr": lambda year: check_year(year, 1920, 2002),
-        "iyr": lambda year: check_year(year, 2010, 2020),
-        "eyr": lambda year: check_year(year, 2020, 2030),
-        "hgt": check_height,
-        "hcl": lambda color: re.fullmatch(r"#[a-f0-9]{6}", color),
-        "ecl": lambda color: color in "amb blu brn gry grn hzl oth".split(),
-        "pid": lambda pid: len(pid) == 9 and pid.isnumeric(),
-        "cid": lambda cid: True,
-    }
+    for field in passport.split():
+        key, value = field.split(":")
+        if not rules[key](value):
+            return False
+    return True
 
-    for passport in passports[0:1]:
-        for field in passport.split():
-            print("checking", field)
-            key, value = field.split(":")
-            is_valid = rules[key](value)
-            print("=> valid!" if is_valid else "=> not valid")
+
+def part_one():
+    return len([p for p in passports if has_required_fields(p)])
+
+
+def part_two():
+    return len([p for p in passports if passport_is_valid(p)])
 
 
 print(part_two())
