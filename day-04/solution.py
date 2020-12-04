@@ -1,13 +1,7 @@
 # Problem spec: https://adventofcode.com/2020/day/4
 
 with open("input.txt", "r") as input_file:
-    passports = (
-        input_file.read()
-        .replace("\n\n", "%%")
-        .replace("\n", " ")
-        .replace("%%", "\n")
-        .split("\n")
-    )
+    passports = input_file.read().split("\n\n")
 
 
 def part_one():
