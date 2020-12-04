@@ -46,10 +46,8 @@ def part_two():
         "byr": lambda year: check_year(year, 1920, 2002),
         "iyr": lambda year: check_year(year, 2010, 2020),
         "eyr": lambda year: check_year(year, 2020, 2030),
-        "hgt": lambda height: check_height(height),
-        "hcl": lambda color: len(color) == 7
-        and color[0] == "#"
-        and all([char in "0123456789abcdef" for char in color[1:]]),
+        "hgt": check_height,
+        "hcl": lambda color: re.fullmatch(r"#[a-f0-9]{6}", color),
         "ecl": lambda color: color in "amb blu brn gry grn hzl oth".split(),
         "pid": lambda pid: len(pid) == 9 and pid.isnumeric(),
         "cid": lambda cid: True,
