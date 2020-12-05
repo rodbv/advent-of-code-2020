@@ -14,12 +14,24 @@ def check_height(height):
     return False
 
 
+"""
+byr (Birth Year) - four digits; at least 1920 and at most 2002.
+iyr (Issue Year) - four digits; at least 2010 and at most 2020.
+eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
+hgt (Height) - a number followed by either cm or in:
+If cm, the number must be at least 150 and at most 193.
+If in, the number must be at least 59 and at most 76.
+hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
+ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
+pid (Passport ID) - a nine-digit number, including leading zeroes.
+cid (Country ID) - ignored, missing or not.
+"""
 rules = {
     "byr": lambda year: check_year(year, 1920, 2002),
     "iyr": lambda year: check_year(year, 2010, 2020),
     "eyr": lambda year: check_year(year, 2020, 2030),
     "hgt": check_height,
-    "hcl": lambda color: re.fullmatch(r"#[a-f0-9]{6}", color) is not None,
+    "hcl": lambda color: bool(re.fullmatch(r"#[a-f0-9]{6}", color)),
     "ecl": lambda color: color in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"],
     "pid": lambda pid: len(pid) == 9 and pid.isnumeric(),
     "cid": lambda cid: True,
@@ -36,19 +48,6 @@ def check_year(year, min, max):
 
 
 def passport_is_valid(passport):
-    """
-    byr (Birth Year) - four digits; at least 1920 and at most 2002.
-    iyr (Issue Year) - four digits; at least 2010 and at most 2020.
-    eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
-    hgt (Height) - a number followed by either cm or in:
-    If cm, the number must be at least 150 and at most 193.
-    If in, the number must be at least 59 and at most 76.
-    hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
-    ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
-    pid (Passport ID) - a nine-digit number, including leading zeroes.
-    cid (Country ID) - ignored, missing or not.
-    """
-
     if not has_required_fields(passport):
         return False
 

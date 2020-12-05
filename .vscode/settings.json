@@ -2,5 +2,6 @@
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": false,
     "python.linting.banditEnabled": false,
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": true,
+    "python.pythonPath": "/Users/rodbv/code/study/advent-of-code-2020/venv/bin/python3"
 }
