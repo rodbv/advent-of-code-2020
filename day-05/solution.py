@@ -9,15 +9,12 @@ def to_decimal(code):
     binary = code.strip().replace('B', '1').replace('F', '0').replace('L', '0').replace('R', '1')
     return int(binary, 2)
 
-def seat_id(row, seat):
-    return (8 * row) + seat
-
 
 def get_seat_ids():
     for boarding_pass in boarding_passes:
         row = to_decimal(boarding_pass[:7])
         seat = to_decimal(boarding_pass[-3:])
-        yield seat_id(row, seat)
+        yield (8 * row) + seat
         
 def part_one():
     return  max(get_seat_ids())
